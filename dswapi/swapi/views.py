@@ -48,19 +48,17 @@ def home_screen_view(request):
             dataset = DataSet.objects.create(filename=unique_filename)
 
             for character in characters:
-                Character.objects.create(
-                    name=character['name'],
-                    height=character['height'],
-                    mass=character['mass'],
-                    hair_color=character['hair_color'],
-                    skin_color=character['skin_color'],
-                    eye_color=character['eye_color'],
-                    birth_year=character['birth_year'],
-                    gender=character['gender'],
-                    edited=character['edited']
-                    # homeworld=planets[character['name'][-1]]
-                    # TODO: resolve from external endpoint
-                )
+                # Character.objects.create(
+                #     name=character['name'],
+                #     height=character['height'],
+                #     mass=character['mass'],
+                #     hair_color=character['hair_color'],
+                #     skin_color=character['skin_color'],
+                #     eye_color=character['eye_color'],
+                #     birth_year=character['birth_year'],
+                #     gender=character['gender'],
+                #     edited=character['edited']
+                # )
 
                 csv_writer = csv.writer(response)
 
@@ -68,13 +66,12 @@ def home_screen_view(request):
 
                 for emp in characters:
                     if count == 0:
-                        # header = emp.keys()
+
                         header = ['name', 'height', 'mass', 'hair_color', 'skin_color', 'eye_color', 'birth_year',
                                   'gender', 'homeworld', 'date']
                         csv_writer.writerow(header)
                         count += 1
-                        # Writing data of CSV file
-                        # csv_writer.writerow(emp.values())
+
                     planet_number = int(emp['homeworld'].rsplit('/', 2)[1])
 
                     csv_writer.writerow([emp['name'], emp['height'], emp['mass'], emp['hair_color'],
@@ -87,8 +84,6 @@ def home_screen_view(request):
                     else:
                         with open(os.path.join('stored_csv/', unique_filename + '.csv'), 'wb') as f:
                             f.write(response.content)
-
-
                 else:
                     break
 
@@ -96,7 +91,6 @@ def home_screen_view(request):
 
     else:
         form = FetchStarWarsData()
-
 
     return render(request, 'content.html', {"sw_collect": sw_collect, "form": form})
 
