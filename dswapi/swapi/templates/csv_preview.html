@@ -1,0 +1,66 @@
+{% include 'navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="filename mt-3">
+            <h3>{{ filename }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table id="sortTable" class="table table-striped csv_preview" data-paging='false'>
+        <thead>
+        {% for column_name in header %}
+        <th class="column_sort">
+            {{ column_name }}
+        </th>
+        {% endfor %}
+        </thead>
+    {% for row in table %}
+        <tr>
+            {% for field in row %}
+                <td>{{ field }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+</div>
+
+<form method="get">
+    {% csrf_token %}
+    <input type="hidden" name="offset" value="{{ offset|add:10 }}">
+    <input type="submit" value="Load more" class="btn btn-outline-primary m-5">
+</form>
+
+<div class="mt-5">
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+   $(document).ready(function() {
+    var offset = 0;
+    var limit = 10;
+    $('#load-more').click(function() {
+        $.ajax({
+            url: '/load_more',
+            data: {'offset': offset, 'limit': limit},
+            success: function(data) {
+                $('table').append(data);
+                offset += limit;
+            }
+        });
+    });
+});
+</script>
+<script>
+    window.scrollTo(0, document.body.clientHeight);
+</script>
+<script>
+$(document).ready(function () {
+    $('#sortTable').DataTable();
+});
+</script>
+
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>

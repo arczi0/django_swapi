@@ -1,0 +1,11 @@
+.bg-light{
+    background-color: orange !important;
+}
+
+.csv_html{
+    background-color: orange;
+}
+
+table.csv_preview th:hover{
+    cursor: pointer;
+}

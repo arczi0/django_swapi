@@ -1,0 +1,37 @@
+{% include 'navbar.html' %}
+
+
+
+<div class="container mt-5">
+  <div class="row">
+     <div class="col">
+         <form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+             <div class="container">
+                 <div class="row">
+                     <div class="col-md-3">
+                         <h3>Collections</h3>
+                     </div>
+                     <div class="col-md-6">
+                         <input id="submit" type="submit" value="Fetch" class="btn btn-success">
+                     </div>
+                 </div>
+             </div>
+</form>
+<!--      <button class="btn btn-success">Fetch</button>-->
+         <!--        {{ response }}-->
+
+
+ {% for item in sw_collect %}
+         <table class="table table-striped">
+              <tr>
+         <td><a href="csv_preview/{{ item.filename}}">{{ item.downloaded_time }}</a> </td>
+    </tr>
+       {% endfor %}
+         </table>
+
+
+  </div>
+  </div>
+</div>
