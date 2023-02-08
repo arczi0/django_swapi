@@ -48,25 +48,11 @@ def home_screen_view(request):
             dataset = DataSet.objects.create(filename=unique_filename)
 
             for character in characters:
-                # Character.objects.create(
-                #     name=character['name'],
-                #     height=character['height'],
-                #     mass=character['mass'],
-                #     hair_color=character['hair_color'],
-                #     skin_color=character['skin_color'],
-                #     eye_color=character['eye_color'],
-                #     birth_year=character['birth_year'],
-                #     gender=character['gender'],
-                #     edited=character['edited']
-                # )
-
                 csv_writer = csv.writer(response)
-
                 count = 0
 
                 for emp in characters:
                     if count == 0:
-
                         header = ['name', 'height', 'mass', 'hair_color', 'skin_color', 'eye_color', 'birth_year',
                                   'gender', 'homeworld', 'date']
                         csv_writer.writerow(header)
@@ -86,9 +72,7 @@ def home_screen_view(request):
                             f.write(response.content)
                 else:
                     break
-
             return response
-
     else:
         form = FetchStarWarsData()
 
